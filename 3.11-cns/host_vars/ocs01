@@ -1,0 +1,8 @@
+---
+openshift_node_group_name: 'node-config-infra'
+glusterfs_devices:
+  - "/dev/vdb"
+  - "/dev/vdc"
+glusterfs_ip: 192.168.50.14
+glusterfs_zone: 1
+glusterfs_cluster: 1

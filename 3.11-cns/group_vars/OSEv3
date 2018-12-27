@@ -1,0 +1,110 @@
+---
+# Credentials
+ansible_become: true
+ansible_become_user: root
+ansible_ssh_user: cloud-user
+ansible_host_key_checking: False
+ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
+
+# Skipped Check
+openshift_disable_check: memory_availability,disk_availability,docker_storage,docker_image_availability
+#openshift_disable_check: memory_availability,disk_availability,docker_storage
+
+# Custom Node Group
+openshift_node_groups:
+  - name: node-config-master
+    labels: 
+      - 'node-role.kubernetes.io/master=true'
+  - name: node-config-infra
+    labels: 
+      - 'node-role.kubernetes.io/infra=true'
+  - name: node-config-compute
+    labels:
+      - 'node-role.kubernetes.io/compute=true'
+  - name: node-config-router
+    labels: 
+      - 'node-role.kubernetes.io/router=true'
+
+# Version
+openshift_release: v3.11.51
+openshift_image_tag: v3.11.51
+openshift_deployment_type: openshift-enterprise
+#oreg_url: registry.access.redhat.com
+
+# Registry.redhat.io creds. get this ServiceAccount from the portal.
+oreg_auth_user: 'xxxxx'
+oreg_auth_password: 'xxxxx'
+
+# Identity
+openshift_master_identity_providers: 
+  - name: 'htpasswd_auth'
+    login: 'true'
+    challenge: 'true'
+    kind: 'HTPasswdPasswordIdentityProvider'
+
+openshift_master_htpasswd_users:
+  ocpadmin: '$apr1$JZBsFG4.$AEaT..lHooqETQHwXgYE2.'
+
+# Master & Node configs
+debug_level: 3
+openshift_docker_options: "-l warn --ipv6=false"
+openshift_master_pod_eviction_timeout: 1m
+openshift_master_min_tls_version: VersionTLS12
+openshift_node_min_tls_version: VersionTLS12
+
+# Hostnames
+openshift_master_cluster_hostname: ocp-int-prod.bytewise.com.my
+openshift_master_cluster_public_hostname: ocp-con-prod.bytewise.com.my
+openshift_master_default_subdomain: cloudapps.bytewise.com.my
+
+# Certs
+openshift_master_overwrite_named_certificates: true
+## Master API Cert
+#openshift_master_named_certificates: [{ "certfile": "~/staging_stuff/files/ssl/ocp-con-prod.bytewise.com.my.pem", "keyfile": "~/staging_stuff/files/ssl/ocp-con-prod.bytewise.com.my.key", "names": ["ocp-con-prod.bytewise.com.my"], "cafile": "~/staging_stuff/files/ssl/myCA.pem" }] 
+
+# Networking
+openshift_portal_net: 10.51.0.0/16
+osm_cluster_network_cidr: 10.50.0.0/16
+osm_host_subnet_length: 9
+
+## Catalog Service
+openshift_enable_service_catalog: true
+template_service_broker_install: true
+openshift_install_examples: true
+
+
+# Node selector
+osm_default_node_selector: 'node-role.kubernetes.io/compute=true'
+openshift_hosted_router_selector: 'node-role.kubernetes.io/router=true'
+
+# Registry
+openshift_hosted_registry_storage_kind: glusterfs
+openshift_hosted_registry_storage_volume_size: 25Gi
+openshift_hosted_registry_selector: 'node-role.kubernetes.io/infra=true'
+
+# Clock
+openshift_clock_enabled: true
+
+# Router Replica
+openshift_hosted_router_replicas: 1
+
+# OCS 
+openshift_storage_glusterfs_image: registry.redhat.io/rhgs3/rhgs-server-rhel7:v3.11
+openshift_storage_glusterfs_block_image: registry.redhat.io/rhgs3/rhgs-gluster-block-prov-rhel7:v3.11
+openshift_storage_glusterfs_heketi_image: registry.redhat.io/rhgs3/rhgs-volmanager-rhel7:v3.11
+dynamic_volumes_check: False
+openshift_storage_glusterfs_namespace: ocs-storage
+openshift_storage_glusterfs_storageclass: true
+openshift_storage_glusterfs_block_deploy: true
+openshift_storage_glusterfs_block_storageclass: true
+openshift_storage_glusterfs_block_host_vol_size: 100
+openshift_storage_glusterfs_block_host_vol_create: true
+openshift_storage_glusterfs_block_storageclass_default: true
+
+# Prometheus
+openshift_cluster_monitoring_operator_prometheus_storage_enabled: true
+openshift_cluster_monitoring_operator_alertmanager_storage_enabled: true
+openshift_cluster_monitoring_operator_prometheus_storage_capacity: 10Gi
+openshift_cluster_monitoring_operator_alertmanager_storage_capacity: 1Gi
+openshift_cluster_monitoring_operator_prometheus_storage_class_name: glusterfs-storage
+openshift_cluster_monitoring_operator_alertmanager_storage_class_name: glusterfs-storage
