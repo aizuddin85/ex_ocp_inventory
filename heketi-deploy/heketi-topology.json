@@ -1,0 +1,56 @@
+{
+    "clusters": [
+      {
+        "nodes": [
+          {
+            "node": {
+              "hostnames": {
+                "manage": [
+                  "rhgs01.bytewise.com.my"
+                ],
+                "storage": [
+                  "192.168.50.16"
+                ]
+              },
+              "zone": 1
+            },
+            "devices": [
+              "/dev/vdb"
+            ]
+          },
+          {
+            "node": {
+              "hostnames": {
+                "manage": [
+                  "rhgs02.bytewise.com.my"
+                ],
+                "storage": [
+                  "192.168.50.17"
+                ]
+              },
+              "zone": 1
+            },
+            "devices": [
+              "/dev/vdb"
+            ]
+          },
+          {
+            "node": {
+              "hostnames": {
+                "manage": [
+                  "rhgs03.bytewise.com.my"
+                ],
+                "storage": [
+                  "192.168.50.18"
+                ]
+              },
+              "zone": 1
+            },
+            "devices": [
+              "/dev/vdb"
+            ]
+          }
+        ]
+      }
+    ]
+  }

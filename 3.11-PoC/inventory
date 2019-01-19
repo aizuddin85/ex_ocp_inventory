@@ -1,0 +1,15 @@
+[OSEv3:children]
+masters
+nodes
+etcd
+
+[masters]
+master01
+
+[etcd]
+master01
+
+[nodes]
+master01
+infra01
+worker01

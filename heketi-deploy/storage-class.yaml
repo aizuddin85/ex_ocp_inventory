@@ -1,0 +1,8 @@
+kind: StorageClass
+apiVersion: storage.k8s.io/v1
+metadata:
+  name: gluster-dyn
+provisioner: kubernetes.io/glusterfs
+parameters:
+  resturl: "http://deploy-heketi.gluster-provider.svc.cluster.local:8080" 
+  restauthenabled: "false"
